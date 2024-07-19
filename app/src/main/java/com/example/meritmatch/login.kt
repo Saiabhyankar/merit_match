@@ -16,5 +16,10 @@ interface Login {
     @GET("get")
     suspend fun checkIfUserExists(@Query("username") username:String ):checkIfUserExists
 
+    @POST("password")
+    suspend fun checkPassWord(@Body password: Password):checkValue
+
+    @GET("karmaPoints")
+    suspend fun getKarmaPoints(@Query("username") username:String):karmaValue
 
 }

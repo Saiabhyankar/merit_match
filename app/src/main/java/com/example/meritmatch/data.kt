@@ -11,4 +11,19 @@ data class createResponse(
 data class checkIfUserExists(
         val getRequest:String
         )
+data class Password(
+    var userName: String,
+    var passWord:String
+)
 
+data class checkValue(
+    var bool:String
+)
+
+data class karma(
+    var username:String
+)
+
+data class karmaValue(
+    var karmaPoints:Int
+)

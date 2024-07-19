@@ -80,6 +80,9 @@ fun Transaction(){
                 modifier=Modifier.offset(50.dp,250.dp),
                 color=Color.Gray,
                 fontSize = 18.sp)
+            Text(karmaPoint.value.toString(),
+                modifier = Modifier
+                    .offset(x=100.dp,y=100.dp))
 
 
 

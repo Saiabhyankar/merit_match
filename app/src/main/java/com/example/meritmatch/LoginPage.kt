@@ -74,8 +74,9 @@ fun Login(navigate:()->Unit){
             TextField(value = password.value, onValueChange = { password.value=it}, label = {Text("password" )},
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.clickable {
-                    loginPasswordClick.value=true
+
                 })
+
             Button(onClick = { },
                 colors = ButtonDefaults.buttonColors(Color.Transparent),
                 modifier= Modifier
@@ -87,15 +88,13 @@ fun Login(navigate:()->Unit){
 
             Button(
                 onClick = {
-                    if(userNameFromBackend.value.lowercase()=="found"){
-                            pageNum.value=2
-                            navigate()
+                    if(userNameFromBackend.value.lowercase()=="found" ){
+                        pageNum.value=2
                     }
                     else if(userNameFromBackend.value.lowercase()=="not found"){
                         pageNum.value=1
-                        navigate()
                     }
-
+                    navigate()
 
                 }
                 ,
@@ -117,7 +116,7 @@ fun Login(navigate:()->Unit){
             Button(onClick = {
                 pageNum.value=1
                 navigate()
-                signUpOnClick.value=true},
+                signUpOnClick.value=true },
 
                 modifier = Modifier.offset(x=80.dp,y=10.dp),
                 colors = ButtonDefaults.buttonColors(Color.Transparent)) {
@@ -133,7 +132,6 @@ fun Login(navigate:()->Unit){
                     .size(30.dp)
                     .offset(110.dp, 75.dp))
         }
-
     }
 
 }
