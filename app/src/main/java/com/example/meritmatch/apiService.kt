@@ -74,9 +74,10 @@ class ApiService : ViewModel() {
     fun getTasks() {
         viewModelScope.launch {
             try {
-                val response=Client.getTasksAvailable()
+                val response=Client.getTasksAvailable(userName.value)
                 _tasks.value=_tasks.value.copy(
-                    tasks=response.tasks
+                    tasks=response.tasks,
+                    loading = false
                 )
                 // Handle success
             } catch (e: Exception) {
@@ -98,7 +99,8 @@ class ApiService : ViewModel() {
         val karmaPoint:Int=0
     )
     data class GetReq3(
-        val tasks:List<tasks> = emptyList()
+        val tasks:List<tasks> = emptyList(),
+        val loading:Boolean=true
     )
 }
 

@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
@@ -68,6 +69,7 @@ fun SignUp(navigate:()->Unit) {
                 modifier = Modifier.offset(y=50.dp))
             Spacer(modifier = Modifier.padding(4.dp))
             TextField(value = password.value, onValueChange = { password.value=it}, label = { Text("password    " ) },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .clickable {
                         loginUserNameClick.value = true
@@ -79,6 +81,7 @@ fun SignUp(navigate:()->Unit) {
                 modifier = Modifier.offset(y=100.dp))
             Spacer(modifier = Modifier.padding(4.dp))
             TextField(value = passwordR.value, onValueChange = { passwordR.value=it}, label = { Text("password    " ) },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .clickable {
                         loginUserNameClick.value = true

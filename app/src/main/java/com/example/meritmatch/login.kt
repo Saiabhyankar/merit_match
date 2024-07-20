@@ -26,6 +26,8 @@ interface Login {
     suspend fun postTask(@Body postTask: postTask):createResponse
 
     @GET("fetch")
-    suspend fun getTasksAvailable():returnTasks
+    suspend fun getTasksAvailable(@Query("username") username:String):returnTasks
 
+    @POST("reserve")
+    suspend fun reserveTask(@Body karma: karma):reserve
 }

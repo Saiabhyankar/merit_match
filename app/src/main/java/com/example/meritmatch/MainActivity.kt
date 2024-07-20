@@ -15,40 +15,43 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
     class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-           Surface(
-              modifier = Modifier.fillMaxSize(),
-               color=   MaterialTheme.colors.background
-           ) {
-               Transaction()
-               //val navController = rememberNavController()
-               //NavHost(navController = navController, startDestination = "firstscreen"){
-//                   composable("firstscreen"){
-//                       Login {
-//                           if (pageNum.value == 1) {
-//                                   navController.navigate("secondscreen")
-//                               }
-//                           else if(pageNum.value==2){
-//                               navController.navigate("thirdscreen")
-//                           }
-//                       }
-//                   }
-//                   composable("secondscreen"){
-//                       SignUp{
-//                           navController.navigate("firstscreen" )
-//                       }
-//                   }
-//                   composable("thirdscreen"){
-//                       Transaction(
-//                       )
-//                   }
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            enableEdgeToEdge()
+            setContent {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
 
-               }
-           }
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "firstscreen") {
+                        composable("firstscreen") {
+                            Login {
+                                if (pageNum.value == 1) {
+                                    navController.navigate("secondscreen")
+                                } else if (pageNum.value == 2) {
+                                    navController.navigate("thirdscreen")
+                                }
+                            }
+                        }
+                        composable("secondscreen") {
+                            SignUp {
+                                navController.navigate("firstscreen")
+                            }
+                        }
+                        composable("thirdscreen") {
+                            Transaction{
+                                navController.navigate("fourthscreen")
+                            }
+                        }
+                        composable("fourthscreen") {
+                            TaskPost()
+                        }
+                    }
+                }
+            }
         }
     }
 

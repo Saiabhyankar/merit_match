@@ -43,3 +43,7 @@ data class tasks(
 data class returnTasks(
     var tasks:List<tasks>
 )
+
+data class reserve(
+    var update:String
+)

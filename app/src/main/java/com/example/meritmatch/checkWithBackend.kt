@@ -1,8 +1,11 @@
 package com.example.meritmatch
 
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.meritmatch.ui.theme.TaskComposables
 
 @Composable
 
@@ -17,9 +20,8 @@ fun GetResponse(){
 
     val task by cursor.tasks
 
-    if(userName.value!="") {
-        cursor.interact()
-    }
+    cursor.interact()
+
     getUserName(checkIfUserExists(getValue.getValue))
     if(password.value!=""){
        cursor.checkPassword()
@@ -30,8 +32,6 @@ fun GetResponse(){
 
     getKarmaPoints(karmaValue(karmaPoints.karmaPoint))
 
-    cursor.getTasks()
-    getTask( task.tasks)
 
 }
 
@@ -47,7 +47,4 @@ fun getKarmaPoints(karmaValue: karmaValue){
     karmaPoint.value=karmaValue.karmaPoints
 }
 
-fun getTask(tasks:List<tasks>){
-    val length=tasks.size
-    task.value=tasks[length].tasks
-}
+
