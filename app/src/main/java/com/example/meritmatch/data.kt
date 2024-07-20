@@ -27,3 +27,19 @@ data class karma(
 data class karmaValue(
     var karmaPoints:Int
 )
+
+data class postTask(
+    var username:String,
+    var task:String,
+    var karmapoints:Int
+)
+
+data class tasks(
+        var karmapoints:Int,
+        var tasks:String,
+        var username:String
+)
+
+data class returnTasks(
+    var tasks:List<tasks>
+)

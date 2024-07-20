@@ -24,34 +24,34 @@ import androidx.navigation.compose.rememberNavController
               modifier = Modifier.fillMaxSize(),
                color=   MaterialTheme.colors.background
            ) {
-
-               val navController = rememberNavController()
-               NavHost(navController = navController, startDestination = "firstscreen"){
-                   composable("firstscreen"){
-                       Login {
-                           if (pageNum.value == 1) {
-                                   navController.navigate("secondscreen")
-                               }
-                           else if(pageNum.value==2){
-                               navController.navigate("thirdscreen")
-                           }
-                       }
-                   }
-                   composable("secondscreen"){
-                       SignUp{
-                           navController.navigate("firstscreen" )
-                       }
-                   }
-                   composable("thirdscreen"){
-                       Transaction(
-                       )
-                   }
+               Transaction()
+               //val navController = rememberNavController()
+               //NavHost(navController = navController, startDestination = "firstscreen"){
+//                   composable("firstscreen"){
+//                       Login {
+//                           if (pageNum.value == 1) {
+//                                   navController.navigate("secondscreen")
+//                               }
+//                           else if(pageNum.value==2){
+//                               navController.navigate("thirdscreen")
+//                           }
+//                       }
+//                   }
+//                   composable("secondscreen"){
+//                       SignUp{
+//                           navController.navigate("firstscreen" )
+//                       }
+//                   }
+//                   composable("thirdscreen"){
+//                       Transaction(
+//                       )
+//                   }
 
                }
            }
         }
     }
-}
+
 
 
 

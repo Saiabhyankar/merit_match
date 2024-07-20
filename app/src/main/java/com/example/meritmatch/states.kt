@@ -1,5 +1,6 @@
 package com.example.meritmatch
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 
 var userName= mutableStateOf("")
@@ -13,3 +14,4 @@ var pageNum= mutableStateOf(0)
 var passwordR= mutableStateOf("")
 var passwd= mutableStateOf("")
 var karmaPoint= mutableStateOf(0)
+var task=mutableStateOf("")

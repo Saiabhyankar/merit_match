@@ -16,6 +16,9 @@ class ApiService : ViewModel() {
     private val _karma = mutableStateOf(GetReq2())
     val karma: State<GetReq2> = _karma
 
+    private val _tasks = mutableStateOf(GetReq3())
+    val tasks: State<GetReq3> = _tasks
+
 
     fun interact() {
         viewModelScope.launch {
@@ -68,6 +71,21 @@ class ApiService : ViewModel() {
         }
     }
 
+    fun getTasks() {
+        viewModelScope.launch {
+            try {
+                val response=Client.getTasksAvailable()
+                _tasks.value=_tasks.value.copy(
+                    tasks=response.tasks
+                )
+                // Handle success
+            } catch (e: Exception) {
+                // Handle error
+                println("error: ${e.message}")
+            }
+        }
+    }
+
     data class GetReq1(
         val getValue: String = ""
     )
@@ -78,6 +96,9 @@ class ApiService : ViewModel() {
 
     data class GetReq2(
         val karmaPoint:Int=0
+    )
+    data class GetReq3(
+        val tasks:List<tasks> = emptyList()
     )
 }
 

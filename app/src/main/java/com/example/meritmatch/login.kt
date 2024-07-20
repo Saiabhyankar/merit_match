@@ -22,4 +22,10 @@ interface Login {
     @GET("karmaPoints")
     suspend fun getKarmaPoints(@Query("username") username:String):karmaValue
 
+    @POST("task")
+    suspend fun postTask(@Body postTask: postTask):createResponse
+
+    @GET("fetch")
+    suspend fun getTasksAvailable():returnTasks
+
 }
