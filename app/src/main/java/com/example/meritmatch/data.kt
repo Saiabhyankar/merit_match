@@ -31,7 +31,8 @@ data class karmaValue(
 data class postTask(
     var username:String,
     var task:String,
-    var karmapoints:Int
+    var karmapoints:Int,
+    var taskDescription:String
 )
 
 data class tasks(

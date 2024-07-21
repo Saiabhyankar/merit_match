@@ -61,7 +61,7 @@ fun TaskPost(){
             color=Color.Gray,
             fontSize = 24.sp,
             modifier = Modifier.offset(y=190.dp))
-        TextField(value = taskPost.value, onValueChange = { taskPost.value=it}, label = {Text("Task Description",
+        TextField(value = taskDescription.value, onValueChange = { taskDescription.value=it}, label = {Text("Task Description",
             color = Color.Gray)},
             modifier = Modifier.offset(x=-10.dp,y=210.dp))
 
@@ -78,7 +78,7 @@ fun TaskPost(){
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     Client.postTask(
-                        postTask(userName.value, taskPost.value, karmaPost.value.toInt())
+                        postTask(userName.value, taskPost.value,karmaPost.value.toInt(), taskDescription.value)
                     )
                     // Handle success
                 } catch (e: Exception) {
