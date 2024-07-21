@@ -43,11 +43,17 @@ import androidx.navigation.compose.rememberNavController
                         }
                         composable("thirdscreen") {
                             Transaction{
-                                navController.navigate("fourthscreen")
+                                if(pageNum.value==3)
+                                    navController.navigate("fourthscreen")
+                                else if(pageNum.value==4)
+                                    navController.navigate("fifthscreen")
                             }
                         }
                         composable("fourthscreen") {
                             TaskPost()
+                        }
+                        composable("fifthscreen") {
+                            RequestsSent()
                         }
                     }
                 }

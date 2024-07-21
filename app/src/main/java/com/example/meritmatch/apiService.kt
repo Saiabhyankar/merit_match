@@ -19,6 +19,9 @@ class ApiService : ViewModel() {
     private val _tasks = mutableStateOf(GetReq3())
     val tasks: State<GetReq3> = _tasks
 
+    private val _tasksAccept = mutableStateOf(GetReq4())
+    val tasksAccept: State<GetReq4> = _tasksAccept
+
 
     fun interact() {
         viewModelScope.launch {
@@ -87,6 +90,23 @@ class ApiService : ViewModel() {
         }
     }
 
+    fun acceptTasks() {
+        viewModelScope.launch {
+            try {
+                val response=Client.acceptTaskReserve(userName.value)
+                _tasksAccept.value=_tasksAccept.value.copy(
+                    tasks=response.tasks,
+                    loading = false
+                )
+                println(_tasksAccept.value.tasks[1])
+                // Handle success
+            } catch (e: Exception) {
+                // Handle error
+                println("error: ${e.message}")
+            }
+        }
+    }
+
     data class GetReq1(
         val getValue: String = ""
     )
@@ -100,6 +120,11 @@ class ApiService : ViewModel() {
     )
     data class GetReq3(
         val tasks:List<tasks> = emptyList(),
+        val loading:Boolean=true
+    )
+
+    data class GetReq4(
+        val tasks:List<tasks1> = emptyList(),
         val loading:Boolean=true
     )
 }

@@ -48,3 +48,13 @@ data class returnTasks(
 data class reserve(
     var update:String
 )
+
+data class tasks1(
+    var karmapoints:Int,
+    var tasks:String,
+    var username:String
+)
+
+data class returnTasks1(
+    var tasks:List<tasks1>
+)

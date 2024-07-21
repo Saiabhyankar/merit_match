@@ -54,8 +54,6 @@ import java.time.LocalTime
 
 fun Transaction(navigate:()->Unit){
 
-
-
     val cursor:ApiService= viewModel()
     val task1 by cursor.tasks
     cursor.getTasks()
@@ -72,6 +70,7 @@ fun Transaction(navigate:()->Unit){
     val date =LocalDate.now()
     val time=LocalTime.now()
     val add = painterResource(id = R.drawable.add)
+    val requests= painterResource(id = R.drawable.img)
     Column(modifier = Modifier.fillMaxSize()) {
         Card(
             colors = CardDefaults.cardColors(containerColor = Color(53, 0, 107, 255)),
@@ -161,6 +160,7 @@ fun Transaction(navigate:()->Unit){
         ) {
             Button(
                 onClick = {
+                    pageNum.value=3
                     navigate()
 
                 },
@@ -177,11 +177,32 @@ fun Transaction(navigate:()->Unit){
                     .size(50.dp)
                     .offset(305.dp, -55.dp)
             )
+
+            Button(
+                onClick = {
+                    pageNum.value=4
+                    navigate()
+
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                modifier = Modifier
+                    .offset(200.dp, -110.dp)
+                    .size(height = 80.dp, width = 80.dp)
+            ) {
+
+            }
+            Image(
+                painter = requests, contentDescription = null,
+                Modifier
+                    .size(50.dp)
+                    .offset(215.dp, -175.dp)
+            )
+
             Box(contentAlignment = Alignment.Center) {
                 Column {
                     Text(
                         "Available Tasks",
-                        modifier = Modifier.offset(50.dp, -80.dp),
+                        modifier = Modifier.offset(50.dp, -180.dp),
                         fontFamily = customFont1,
                         fontSize = 18.sp
 
@@ -241,7 +262,8 @@ fun retrieveDetails(task: tasks) {
 
 @Composable
 fun getTask(tasks: List<tasks>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(1),Modifier.size(1000.dp)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(1),Modifier.size(1000.dp)
+        .offset(y=-100.dp)) {
         items(tasks) { details ->
             retrieveDetails(task = details)
         }
