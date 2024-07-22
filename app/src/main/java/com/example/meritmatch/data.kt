@@ -21,7 +21,8 @@ data class checkValue(
 )
 
 data class karma(
-    var username:String
+    var id:Int,
+    var username: String
 )
 
 data class karmaValue(
@@ -36,6 +37,7 @@ data class postTask(
 )
 
 data class tasks(
+        var id:Int,
         var karmapoints:Int,
         var tasks:String,
         var username:String
@@ -50,6 +52,7 @@ data class reserve(
 )
 
 data class tasks1(
+
     var karmapoints:Int,
     var tasks:String,
     var username:String
@@ -58,3 +61,5 @@ data class tasks1(
 data class returnTasks1(
     var tasks:List<tasks1>
 )
+
+

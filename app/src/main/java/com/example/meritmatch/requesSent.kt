@@ -33,13 +33,12 @@ fun RequestsSent() {
     val accept by cursor.tasksAccept
     cursor.acceptTasks()
     Box(Modifier.offset(x=-100.dp,y=350.dp)) {
-            Text("Si")
-
             if (!accept.loading) {
                 if(accept.tasks.isNotEmpty())
                     acceptTask(accept.tasks)
                 else{
-                    Text("No Tasks Available ")
+                    Text("No Tasks Available ",
+                        modifier = Modifier.offset(x=100.dp))
                 }
             }
         }
@@ -57,6 +56,7 @@ fun getDetails(task: tasks1) {
                 .size(height = 60.dp, width = 450.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(3, 0, 107, 255).copy(0.5f))) {
                 Row {
+
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text(task.username.uppercase(),
                         modifier = Modifier.padding(start=10.dp,top = 15.dp),
@@ -71,17 +71,6 @@ fun getDetails(task: tasks1) {
                         fontSize=18.sp)
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(onClick = {
-//                        CoroutineScope(Dispatchers.IO).launch {
-//                            try {
-//                                Client.reserveTask(
-//                                    karma(userName.value)
-//                                )
-//                                // Handle success
-//                            } catch (e: Exception) {
-//                                // Handle error
-//                                println("error: ${e.message}")
-//                            }
-//                        }
                     },
                         modifier= Modifier.offset(y=5.dp)) {
                         Text("Accept")

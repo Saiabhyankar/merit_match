@@ -239,10 +239,11 @@ fun retrieveDetails(task: tasks) {
                         fontSize=18.sp)
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(onClick = {
+                        taskIdentity.value=task.id
                         CoroutineScope(Dispatchers.IO).launch {
                             try {
                                 Client.reserveTask(
-                                    karma(userName.value)
+                                    karma(taskIdentity.value, userName.value)
                                 )
                                 // Handle success
                             } catch (e: Exception) {

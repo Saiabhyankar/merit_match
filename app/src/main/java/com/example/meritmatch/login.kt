@@ -32,5 +32,5 @@ interface Login {
     suspend fun reserveTask(@Body karma: karma):reserve
 
     @GET("accept")
-    suspend fun acceptTaskReserve(@Query("username") username: String):returnTasks1
+    suspend fun acceptTaskReserve(@Query("name") name: String):returnTasks1
 }
