@@ -22,6 +22,9 @@ class ApiService : ViewModel() {
     private val _tasksAccept = mutableStateOf(GetReq4())
     val tasksAccept: State<GetReq4> = _tasksAccept
 
+    private val _user = mutableStateOf(GetReq5())
+    val user: State<GetReq5> = _user
+
 
     fun interact() {
         viewModelScope.launch {
@@ -48,6 +51,21 @@ class ApiService : ViewModel() {
                 )
                 _pass.value=_pass.value.copy(
                     passwd = response.bool
+                )
+                // Handle success
+            } catch (e: Exception) {
+                // Handle error
+                println("error: ${e.message}")
+            }
+        }
+    }
+
+    fun checkUser() {
+        viewModelScope.launch {
+            try {
+                val response=Client.checkUser(userName.value)
+                _user.value=_user.value.copy(
+                    message = response.message
                 )
                 // Handle success
             } catch (e: Exception) {
@@ -126,6 +144,10 @@ class ApiService : ViewModel() {
     data class GetReq4(
         val tasks:List<tasks1> = emptyList(),
         val loading:Boolean=true
+    )
+
+    data class GetReq5(
+        var message:String=""
     )
 }
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,8 +38,12 @@ fun RequestsSent() {
                 if(accept.tasks.isNotEmpty())
                     acceptTask(accept.tasks)
                 else{
-                    Text("No Tasks Available ",
-                        modifier = Modifier.offset(x=100.dp))
+                   Box(contentAlignment = Alignment.Center) {
+                       Text(
+                           "No Tasks Available ",
+                           modifier = Modifier.offset(x = 100.dp)
+                       )
+                   }
                 }
             }
         }
@@ -71,6 +76,17 @@ fun getDetails(task: tasks1) {
                         fontSize=18.sp)
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(onClick = {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                Client.transaction(
+                                    transactionProcess(userName.value,task.username,task.karmapoints)
+                                )
+                                // Handle success
+                            } catch (e: Exception) {
+                                // Handle error
+                                println("error: ${e.message}")
+                            }
+                        }
                     },
                         modifier= Modifier.offset(y=5.dp)) {
                         Text("Accept")

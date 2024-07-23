@@ -33,4 +33,10 @@ interface Login {
 
     @GET("accept")
     suspend fun acceptTaskReserve(@Query("name") name: String):returnTasks1
+
+    @POST("transaction")
+    suspend fun transaction(@Body transactionProcess:transactionProcess):message
+
+    @GET("check")
+    suspend fun checkUser(@Query("userName") userName:String):createResponse
 }

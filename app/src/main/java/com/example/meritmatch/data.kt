@@ -62,4 +62,13 @@ data class returnTasks1(
     var tasks:List<tasks1>
 )
 
+data class transactionProcess(
+    var userName1:String,
+    var userName2:String,
+    var karmaPoint:Int
+)
+
+data class message(
+    var updated:String
+)
 

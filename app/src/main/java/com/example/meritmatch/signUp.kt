@@ -1,5 +1,6 @@
 package com.example.meritmatch
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +15,19 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +35,11 @@ import kotlinx.coroutines.launch
 @Composable
 
 fun SignUp(navigate:()->Unit) {
+    val context= LocalContext.current
+    val cursor: ApiService = viewModel()
+    cursor.checkUser()
+    val user by cursor.user
+    getUserValidation(createResponse(user.message))
     val customFont= FontFamily(
         Font(R.font.teko)
     )
@@ -62,7 +71,8 @@ fun SignUp(navigate:()->Unit) {
             Spacer(modifier = Modifier.padding(4.dp))
             TextField(value = userName.value, onValueChange = { userName.value=it}, label = { Text("username" ) },
                 modifier = Modifier.clickable {
-                    loginUserNameClick.value=true})
+
+                    })
 
             Text("Password",
                 fontFamily = FontFamily.Monospace,
@@ -89,18 +99,25 @@ fun SignUp(navigate:()->Unit) {
                     .offset(y = 100.dp))
 
             Button(onClick = {
-                             navigate()
-                if(password.value==passwordR.value){
-                    CoroutineScope(Dispatchers.IO).launch {
-                        try {
-                            Client.postUserDetails(
-                                UserDetails(userName.value, password.value)
-                            )
-                            // Handle success
-                        } catch (e: Exception) {
-                            // Handle error
-                            println("error: ${e.message}")
+                if (userIfExists.value == "false") {
+                    Toast.makeText(context, "User Already Exists", Toast.LENGTH_SHORT).show();
+                    userName.value = ""
+                    password.value = ""
+                    passwordR.value = ""
+                } else {
+                    if (password.value == passwordR.value) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                Client.postUserDetails(
+                                    UserDetails(userName.value, password.value)
+                                )
+                                // Handle success
+                            } catch (e: Exception) {
+                                // Handle error
+                                println("error: ${e.message}")
+                            }
                         }
+                        navigate()
                     }
                 }
             },
@@ -120,4 +137,7 @@ fun SignUp(navigate:()->Unit) {
 
         }
     }
+}
+fun getUserValidation(createResponse: createResponse){
+    userIfExists.value=createResponse.message
 }

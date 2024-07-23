@@ -1,5 +1,6 @@
 package com.example.meritmatch
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -37,6 +39,7 @@ fun Login(navigate:()->Unit){
     val customFont= FontFamily(
         Font(R.font.firasans)
     )
+    val context= LocalContext.current
     val logo= painterResource(id = R.drawable.logo)
     val login= painterResource(id = R.drawable.login)
     val view= painterResource(id = R.drawable.viewpasword)
@@ -88,8 +91,13 @@ fun Login(navigate:()->Unit){
 
             Button(
                 onClick = {
-                    if(userNameFromBackend.value.lowercase()=="found" ){
-                        pageNum.value=2
+                    if(userNameFromBackend.value.lowercase() =="found"){
+                        if(passwd.value=="true") {
+                            pageNum.value = 2
+                        }
+                        else{
+                            Toast.makeText(context, "Incorrect Password", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     else if(userNameFromBackend.value.lowercase()=="not found"){
                         pageNum.value=1

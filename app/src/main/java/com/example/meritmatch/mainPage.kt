@@ -194,8 +194,8 @@ fun Transaction(navigate:()->Unit){
             Image(
                 painter = requests, contentDescription = null,
                 Modifier
-                    .size(50.dp)
-                    .offset(215.dp, -175.dp)
+                    .size(60.dp)
+                    .offset(215.dp, -185.dp)
             )
 
             Box(contentAlignment = Alignment.Center) {

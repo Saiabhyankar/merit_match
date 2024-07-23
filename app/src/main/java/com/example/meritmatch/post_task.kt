@@ -37,43 +37,40 @@ fun TaskPost(){
             Font(R.font.sans)
         )
 
-    Surface(
-        color = Color(37,40,53,255)
-    ){
-
-    }
     Column(modifier = Modifier.offset(70.dp,100.dp)){
-        Text("Post Your Tasks Here",
-            fontSize = 24.sp,
-            color = Color.White,
+        Text("Create New Task",
+            fontSize = 32.sp,
+            color = Color.Black,
             fontFamily = customFont)
-        Text("Task",
+        Text("Task Title",
             fontWeight = FontWeight.ExtraBold,
-            color=Color.Gray,
+            color=Color.Black,
             fontSize = 24.sp,
-            modifier = Modifier.offset(y=130.dp))
-        TextField(value = taskPost.value, onValueChange = { taskPost.value=it}, label = {Text("Task",
+            modifier = Modifier.offset(y=50.dp))
+        TextField(value = taskPost.value, onValueChange = { taskPost.value=it}, placeholder = {Text("Task",
             color = Color.Gray)},
-            modifier = Modifier.offset(x=-10.dp,y=150.dp))
+            modifier = Modifier.offset(x=-10.dp,y=70.dp))
 
-        Text("Task description",
+        Text("Task Description",
             fontWeight = FontWeight.ExtraBold,
-            color=Color.Gray,
+            color=Color.Black,
             fontSize = 24.sp,
-            modifier = Modifier.offset(y=190.dp))
-        TextField(value = taskDescription.value, onValueChange = { taskDescription.value=it}, label = {Text("Task Description",
+            modifier = Modifier.offset(y=110.dp))
+        TextField(value = taskDescription.value, onValueChange = { taskDescription.value=it}, placeholder = {Text("Task Description",
             color = Color.Gray)},
-            modifier = Modifier.offset(x=-10.dp,y=210.dp))
+            modifier = Modifier.offset(x=-10.dp,y=130.dp)
+                .size(width=280.dp, height = 100.dp)
+        )
 
         Text("Karma Points",
             fontWeight = FontWeight.ExtraBold,
-            color=Color.Gray,
+            color=Color.Black,
             fontSize = 24.sp,
-            modifier = Modifier.offset(y=250.dp))
+            modifier = Modifier.offset(y=180.dp))
 
-        TextField(value = karmaPost.value, onValueChange = { karmaPost.value=it}, label = {Text("Karma Points",
+        TextField(value = karmaPost.value, onValueChange = { karmaPost.value=it}, placeholder = {Text("Karma Points",
             color = Color.Gray)},
-            modifier = Modifier.offset(x=-10.dp,y=270.dp))
+            modifier = Modifier.offset(x=-10.dp,y=190.dp))
         Button(onClick = {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -88,12 +85,13 @@ fun TaskPost(){
             }
         },
             modifier= Modifier
-                .offset(-5.dp, 350.dp)
+                .offset(-15.dp, 280.dp)
                 .clip(shape = RoundedCornerShape(100))
-                .size(height = 80.dp, width = 250.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(141,99,239,255))) {
+                .size(height = 60.dp, width = 290.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)) {
                 Text("Post Tasks",
-                    fontSize = 28.sp)
+                    fontSize = 24.sp,
+                    modifier = Modifier.offset(x=-5.dp))
         }
 
     }
