@@ -25,6 +25,8 @@ class ApiService : ViewModel() {
     private val _user = mutableStateOf(GetReq5())
     val user: State<GetReq5> = _user
 
+    private val _Valid = mutableStateOf(GetReq6())
+    val Valid: State<GetReq6> = _Valid
 
     fun interact() {
         viewModelScope.launch {
@@ -124,6 +126,20 @@ class ApiService : ViewModel() {
             }
         }
     }
+    fun transactionCheck() {
+        viewModelScope.launch {
+            try {
+                val response=Client.checkTransaction(valid(userName.value, acceptKarmaPoints.value))
+                _Valid.value=_Valid.value.copy(
+                    result = response.result
+                )
+                // Handle success
+            } catch (e: Exception) {
+                // Handle error
+                println("error: ${e.message}")
+            }
+        }
+    }
 
     data class GetReq1(
         val getValue: String = ""
@@ -148,6 +164,10 @@ class ApiService : ViewModel() {
 
     data class GetReq5(
         var message:String=""
+    )
+
+    data class GetReq6(
+        var result:String=""
     )
 }
 

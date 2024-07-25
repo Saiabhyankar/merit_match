@@ -50,7 +50,9 @@ import androidx.navigation.compose.rememberNavController
                             }
                         }
                         composable("fourthscreen") {
-                            TaskPost()
+                            TaskPost{
+                                navController.navigate("thirdscreen")
+                            }
                         }
                         composable("fifthscreen") {
                             RequestsSent()

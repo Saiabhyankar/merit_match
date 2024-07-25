@@ -6,6 +6,7 @@ import android.R.attr.x
 import android.R.attr.y
 import android.R.color
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -53,10 +55,13 @@ import java.time.LocalTime
 @Composable
 
 fun Transaction(navigate:()->Unit){
-
+    val signOut= painterResource(id = R.drawable.signout)
+    val context= LocalContext.current
     val cursor:ApiService= viewModel()
     val task1 by cursor.tasks
+    val accept by cursor.tasksAccept
     cursor.getTasks()
+    cursor.acceptTasks()
 
     if(! task1.loading)
         getTask( task1.tasks)
@@ -111,7 +116,7 @@ fun Transaction(navigate:()->Unit){
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
                 modifier = Modifier
-                    .offset(x = 230.dp, y = 65.dp)
+                    .offset(x = 50.dp, y = 105.dp)
                     .padding(0.dp))
             Spacer(modifier = Modifier.padding(16.dp))
             Text(
@@ -138,17 +143,6 @@ fun Transaction(navigate:()->Unit){
                     .offset(x = 50.dp, y = 200.dp)
                     .padding(0.dp)
             )
-            Canvas(modifier = Modifier.fillMaxSize(), contentDescription = "Line Drawing") {
-                // Draw a line from (100, 100) to (400, 400)
-                drawLine(
-                    color = Color.Gray,
-                    start = Offset(x = 0f, y = -550f),
-                    end = Offset(x = 1080f, y = -550f),
-                    strokeWidth = 5f
-                )
-            }
-
-
         }
 
         Card(
@@ -180,8 +174,12 @@ fun Transaction(navigate:()->Unit){
 
             Button(
                 onClick = {
-                    pageNum.value=4
-                    navigate()
+                    if(accept.tasks.isEmpty())
+                        Toast.makeText(context,"No task to be approved",Toast.LENGTH_SHORT).show()
+                    else {
+                        pageNum.value = 4
+                        navigate()
+                    }
 
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
@@ -198,8 +196,19 @@ fun Transaction(navigate:()->Unit){
                     .offset(215.dp, -185.dp)
             )
 
-            Box(contentAlignment = Alignment.Center) {
-                Column {
+//            Button(onClick = {},
+//                modifier=Modifier.offset(x=100.dp,y=-240.dp),
+//                colors = ButtonDefaults.buttonColors(Color.Transparent)){
+//
+//            }
+//            Image(painter = signOut, contentDescription = null,
+//                modifier = Modifier
+//                    .size(60.dp)
+//                    .offset(x = 100.dp, y = -300.dp))
+
+            Box(contentAlignment = Alignment.Center,
+                modifier = Modifier.offset(y=0.dp)) {
+                Column (){
                     Text(
                         "Available Tasks",
                         modifier = Modifier.offset(50.dp, -180.dp),
@@ -218,11 +227,12 @@ fun Transaction(navigate:()->Unit){
 
 @Composable
 fun retrieveDetails(task: tasks) {
+    val reserve= painterResource(id = R.drawable.reserve)
     Column {
         Row {
             Card(modifier = Modifier
                 .padding(10.dp)
-                .size(height = 60.dp, width = 450.dp),
+                .size(height = 150.dp, width = 450.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(3, 0, 107, 255).copy(0.5f))) {
                 Row {
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -252,9 +262,14 @@ fun retrieveDetails(task: tasks) {
                             }
                         }
                     },
-                        modifier=Modifier.offset(y=5.dp)) {
-                        Text("Reserve")
+                        modifier=Modifier.offset(x=45.dp,y=15.dp),
+                        colors = ButtonDefaults.buttonColors(Color.Transparent)) {
+
                     }
+                    Image(painter = reserve, contentDescription = null,
+                        modifier= Modifier
+                            .size(60.dp)
+                            .offset(x = -10.dp))
                 }
             }
         }
@@ -263,8 +278,10 @@ fun retrieveDetails(task: tasks) {
 
 @Composable
 fun getTask(tasks: List<tasks>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(1),Modifier.size(1000.dp)
-        .offset(y=-100.dp)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(1),
+        Modifier
+            .size(10000.dp)
+            .offset(y = -100.dp)) {
         items(tasks) { details ->
             retrieveDetails(task = details)
         }

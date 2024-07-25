@@ -72,3 +72,10 @@ data class message(
     var updated:String
 )
 
+data class valid(
+    var username:String,
+    var karmapoints:Int
+)
+data class validResponse(
+    var result:String
+)

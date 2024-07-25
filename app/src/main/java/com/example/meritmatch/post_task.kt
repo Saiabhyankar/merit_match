@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun TaskPost(){
+fun TaskPost(navigate:()->Unit){
     val customFont= FontFamily(
             Font(R.font.sans)
         )
@@ -83,6 +83,7 @@ fun TaskPost(){
                     println("error: ${e.message}")
                 }
             }
+            navigate()
         },
             modifier= Modifier
                 .offset(-15.dp, 280.dp)

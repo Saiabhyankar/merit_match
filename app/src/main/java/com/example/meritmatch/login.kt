@@ -38,5 +38,8 @@ interface Login {
     suspend fun transaction(@Body transactionProcess:transactionProcess):message
 
     @GET("check")
-    suspend fun checkUser(@Query("userName") userName:String):createResponse
+    suspend fun checkUser(@Query("username") username:String):createResponse
+
+    @GET("transactionPossible")
+    suspend fun checkTransaction(@Body valid: valid):validResponse
 }
