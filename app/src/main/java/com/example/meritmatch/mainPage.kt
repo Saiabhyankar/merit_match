@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -62,10 +63,10 @@ fun Transaction(navigate:()->Unit){
     val accept by cursor.tasksAccept
     cursor.getTasks()
     cursor.acceptTasks()
-
+    cursor.getKarma()
+    val karmaPoints by cursor.karma
     if(! task1.loading)
         getTask( task1.tasks)
-
     val customFont= FontFamily(
          Font( R.font.generica)
     )
@@ -82,10 +83,18 @@ fun Transaction(navigate:()->Unit){
             shape = RoundedCornerShape(0.dp, 0.dp, 40.dp, 30.dp),
             modifier = Modifier.size(500.dp)
         ) {
+            Button(onClick = {
+                userName.value=""
+                password.value=""
+                pageNum.value=1
+            navigate()},
+                modifier = Modifier.offset(x=300.dp,y=100.dp)) {
+                Text("Sign Out")
+            }
             if (time.hour in 6..12) {
                 Text(
                     "Good Morning ,",
-                    modifier = Modifier.offset(50.dp, 100.dp),
+                    modifier = Modifier.offset(50.dp, 50.dp),
                     color = Color.White,
                     fontSize = 28.sp,
                     fontFamily = customFont,
@@ -94,7 +103,7 @@ fun Transaction(navigate:()->Unit){
             } else if (time.hour in 12..18) {
                 Text(
                     "Good Afternoon ,",
-                    modifier = Modifier.offset(50.dp, 100.dp),
+                    modifier = Modifier.offset(50.dp, 50.dp),
                     color = Color.White,
                     fontSize = 28.sp,
                     fontFamily = customFont,
@@ -103,7 +112,7 @@ fun Transaction(navigate:()->Unit){
             } else {
                 Text(
                     "Good Evening ,",
-                    modifier = Modifier.offset(50.dp, 100.dp),
+                    modifier = Modifier.offset(50.dp, 50.dp),
                     color = Color.White,
                     fontSize = 28.sp,
                     fontFamily = customFont,
@@ -116,12 +125,12 @@ fun Transaction(navigate:()->Unit){
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
                 modifier = Modifier
-                    .offset(x = 50.dp, y = 105.dp)
+                    .offset(x = 50.dp, y = 55.dp)
                     .padding(0.dp))
             Spacer(modifier = Modifier.padding(16.dp))
             Text(
                 text = date.dayOfMonth.toString() + " " + date.month.toString() + " " + date.year.toString(),
-                modifier = Modifier.offset(50.dp, 100.dp),
+                modifier = Modifier.offset(50.dp, 50.dp),
                 color = Color.Gray,
                 fontSize = 20.sp
             )
@@ -129,18 +138,18 @@ fun Transaction(navigate:()->Unit){
             Text(
                 "Total Karma Points",
                 modifier = Modifier
-                    .offset(50.dp, 180.dp)
+                    .offset(50.dp, 130.dp)
                     .padding(0.dp),
                 color = Color.Gray,
                 fontSize = 20.sp
             )
             Text(
-                karmaPoint.value.toString(),
+                karmaPoints.karmaPoint.toString(),
                 fontSize = 32.sp,
                 fontFamily = customFont1,
                 color = Color.White,
                 modifier = Modifier
-                    .offset(x = 50.dp, y = 200.dp)
+                    .offset(x = 50.dp, y = 150.dp)
                     .padding(0.dp)
             )
         }
@@ -195,17 +204,6 @@ fun Transaction(navigate:()->Unit){
                     .size(60.dp)
                     .offset(215.dp, -185.dp)
             )
-
-//            Button(onClick = {},
-//                modifier=Modifier.offset(x=100.dp,y=-240.dp),
-//                colors = ButtonDefaults.buttonColors(Color.Transparent)){
-//
-//            }
-//            Image(painter = signOut, contentDescription = null,
-//                modifier = Modifier
-//                    .size(60.dp)
-//                    .offset(x = 100.dp, y = -300.dp))
-
             Box(contentAlignment = Alignment.Center,
                 modifier = Modifier.offset(y=0.dp)) {
                 Column (){

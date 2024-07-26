@@ -32,7 +32,9 @@ import androidx.navigation.compose.rememberNavController
                                 if (pageNum.value == 1) {
                                     navController.navigate("secondscreen")
                                 } else if (pageNum.value == 2) {
-                                    navController.navigate("thirdscreen")
+                                    navController.navigate("thirdscreen") {popUpTo(navController.graph.startDestinationId) {
+                                        inclusive = true}
+                                    }
                                 }
                             }
                         }
@@ -43,6 +45,13 @@ import androidx.navigation.compose.rememberNavController
                         }
                         composable("thirdscreen") {
                             Transaction{
+                                if(pageNum.value==1) {
+                                    navController.navigate("firstscreen") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
                                 if(pageNum.value==3)
                                     navController.navigate("fourthscreen")
                                 else if(pageNum.value==4)

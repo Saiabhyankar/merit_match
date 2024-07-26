@@ -52,7 +52,7 @@ data class reserve(
 )
 
 data class tasks1(
-
+    var id:Int,
     var karmapoints:Int,
     var tasks:String,
     var username:String
@@ -78,4 +78,8 @@ data class valid(
 )
 data class validResponse(
     var result:String
+)
+
+data class accept(
+    var id:Int
 )

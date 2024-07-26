@@ -37,9 +37,9 @@ fun RequestsSent() {
 
     val cursor: ApiService = viewModel()
     val accept by cursor.tasksAccept
-    val check by cursor.Valid
 
-    checkTrans(validResponse(check.result))
+
+
     cursor.acceptTasks()
     acceptTask(accept.tasks)
     }
@@ -50,6 +50,10 @@ fun RequestsSent() {
 fun getDetails(task: tasks1) {
     val cursor: ApiService = viewModel()
     val context= LocalContext.current
+    val check by cursor.Valid
+    acceptKarmaPoints.value=task.karmapoints
+    cursor.transactionCheck()
+    checkTrans(validResponse(check.result))
     Column {
         Row {
             Card(modifier = Modifier
@@ -74,8 +78,7 @@ fun getDetails(task: tasks1) {
                         fontSize=18.sp)
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(onClick = {
-                        acceptKarmaPoints.value=task.karmapoints
-                        cursor.transactionCheck()
+
                         if(transactionCheck.value=="possible"){
                             CoroutineScope(Dispatchers.IO).launch {
                                 try {
@@ -88,6 +91,18 @@ fun getDetails(task: tasks1) {
                                     println("error: ${e.message}")
                                 }
                             }
+
+                            CoroutineScope(Dispatchers.IO).launch {
+                                try {
+                                    Client.acceptedCheck(accept(task.id))
+
+                                } catch (e: Exception) {
+
+                                    println("error: ${e.message}")
+                                }
+                            }
+
+                            Toast.makeText(context,"Transaction Success full",Toast.LENGTH_SHORT).show()
                         }
                         else{
                             Toast.makeText(context,"Invalid Transaction",Toast.LENGTH_SHORT).show()
@@ -95,7 +110,7 @@ fun getDetails(task: tasks1) {
 
 
                     },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(17,4,36)),
                         modifier= Modifier.offset(x=-165.dp,y=75.dp)
                             .size(width=150.dp, height = 50.dp)) {
                         Text("Accept")

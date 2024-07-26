@@ -40,6 +40,9 @@ interface Login {
     @GET("check")
     suspend fun checkUser(@Query("username") username:String):createResponse
 
-    @GET("transactionPossible")
+    @POST("transactionPossible")
     suspend fun checkTransaction(@Body valid: valid):validResponse
+
+    @POST("accepted")
+    suspend fun acceptedCheck(@Body accept: accept):validResponse
 }

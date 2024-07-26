@@ -18,23 +18,15 @@ fun GetResponse(){
 
     val check by cursor.pass
 
-    val karmaPoints by cursor.karma
 
-    val task by cursor.tasks
+
+
     cursor.interact()
-
     getUserName(checkIfUserExists(getValue.getValue))
     if(password.value!=""){
        cursor.checkPassword()
     }
     getPasswd(checkValue(check.passwd))
-    var i=0
-    cursor.getKarma()
-
-    getKarmaPoints(karmaValue(karmaPoints.karmaPoint))
-
-
-
 
 }
 
@@ -45,9 +37,4 @@ fun getUserName(checkIfUserExists: checkIfUserExists){
 fun getPasswd(checkValue: checkValue){
     passwd.value= checkValue.bool
 }
-
-fun getKarmaPoints(karmaValue: karmaValue){
-    karmaPoint.value=karmaValue.karmaPoints
-}
-
 
