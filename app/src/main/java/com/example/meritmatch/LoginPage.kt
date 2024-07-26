@@ -93,6 +93,7 @@ fun Login(navigate:()->Unit){
                 onClick = {
                     if(userNameFromBackend.value.lowercase() =="found"){
                         if(passwd.value=="true") {
+                            Toast.makeText(context,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             pageNum.value = 2
                         }
                         else{
@@ -100,6 +101,7 @@ fun Login(navigate:()->Unit){
                         }
                     }
                     else if(userNameFromBackend.value.lowercase()=="not found"){
+                        Toast.makeText(context,"Invalid User Name",Toast.LENGTH_SHORT).show()
                         pageNum.value=1
                     }
                     navigate()

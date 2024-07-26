@@ -2,7 +2,9 @@
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -28,13 +30,13 @@ import androidx.navigation.compose.rememberNavController
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "firstscreen") {
                         composable("firstscreen") {
+
                             Login {
                                 if (pageNum.value == 1) {
                                     navController.navigate("secondscreen")
                                 } else if (pageNum.value == 2) {
-                                    navController.navigate("thirdscreen") {popUpTo(navController.graph.startDestinationId) {
-                                        inclusive = true}
-                                    }
+                                    navController.navigate("thirdscreen")
+
                                 }
                             }
                         }
@@ -44,14 +46,14 @@ import androidx.navigation.compose.rememberNavController
                             }
                         }
                         composable("thirdscreen") {
+                            BackHandler(true) {
+                                Log.i("LOG_TAG", "Clicked back")
+                            }
                             Transaction{
                                 if(pageNum.value==1) {
-                                    navController.navigate("firstscreen") {
-                                        popUpTo(navController.graph.startDestinationId) {
-                                            inclusive = true
-                                        }
+                                    navController.popBackStack()
                                     }
-                                }
+
                                 if(pageNum.value==3)
                                     navController.navigate("fourthscreen")
                                 else if(pageNum.value==4)

@@ -15,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,6 +79,7 @@ fun getDetails(task: tasks1) {
                     Button(onClick = {
 
                         if(transactionCheck.value=="possible"){
+
                             CoroutineScope(Dispatchers.IO).launch {
                                 try {
                                     Client.transaction(
@@ -101,6 +101,7 @@ fun getDetails(task: tasks1) {
                                     println("error: ${e.message}")
                                 }
                             }
+                            cursor.acceptTasks()
 
                             Toast.makeText(context,"Transaction Success full",Toast.LENGTH_SHORT).show()
                         }

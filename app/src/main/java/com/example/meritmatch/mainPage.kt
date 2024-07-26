@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -225,12 +227,15 @@ fun Transaction(navigate:()->Unit){
 
 @Composable
 fun retrieveDetails(task: tasks) {
+    val cursor:ApiService= viewModel()
+
     val reserve= painterResource(id = R.drawable.reserve)
     Column {
         Row {
             Card(modifier = Modifier
                 .padding(10.dp)
-                .size(height = 150.dp, width = 450.dp),
+                .size(height = 150.dp, width = 450.dp)
+                .clickable { check.value = 1 },
                 colors = CardDefaults.cardColors(containerColor = Color(3, 0, 107, 255).copy(0.5f))) {
                 Row {
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -246,32 +251,49 @@ fun retrieveDetails(task: tasks) {
                         modifier = Modifier.padding(start=10.dp,top = 15.dp),
                         fontSize=18.sp)
                     Spacer(modifier = Modifier.padding(8.dp))
-                    Button(onClick = {
-                        taskIdentity.value=task.id
-                        CoroutineScope(Dispatchers.IO).launch {
-                            try {
-                                Client.reserveTask(
-                                    karma(taskIdentity.value, userName.value)
-                                )
-                                // Handle success
-                            } catch (e: Exception) {
-                                // Handle error
-                                println("error: ${e.message}")
-                            }
-                        }
-                    },
-                        modifier=Modifier.offset(x=45.dp,y=15.dp),
-                        colors = ButtonDefaults.buttonColors(Color.Transparent)) {
 
-                    }
-                    Image(painter = reserve, contentDescription = null,
-                        modifier= Modifier
-                            .size(60.dp)
-                            .offset(x = -10.dp))
                 }
+            }
+            if(check.value==1){
+                AlertDialog(onDismissRequest = { check. value=2}, confirmButton = {  },
+                    text={
+                        Column(){
+                            Text("Do you Want to reserve the task",
+                                modifier = Modifier.offset(x=20.dp),
+                                fontSize=18.sp)
+                            Button(onClick = {
+                                check.value=2
+                                taskIdentity.value=task.id
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    try {
+                                        Client.reserveTask(
+                                            karma(taskIdentity.value, userName.value)
+                                        )
+                                        // Handle success
+                                    } catch (e: Exception) {
+                                        // Handle error
+                                        println("error: ${e.message}")
+                                    }
+                                }
+                                cursor.getTasks()
+
+                            },
+                                modifier=Modifier.offset(x=80.dp,y=45.dp),
+                                colors = ButtonDefaults.buttonColors(Color.White)) {
+
+                            }
+
+                            Image(painter = reserve, contentDescription = null,
+                                modifier= Modifier
+                                    .size(60.dp)
+                                    .offset(x = 80.dp))
+                        }
+
+                    })
             }
         }
     }
+
 }
 
 @Composable
